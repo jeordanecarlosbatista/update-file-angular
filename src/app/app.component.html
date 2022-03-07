@@ -1,6 +1,32 @@
-<div class="update-file-div">
-  <div class="update-file-content">
-    <div>Ícone</div>
-    <div>Arrastar e soltar, ou clicar para adicionar documentos</div>
+<div class="page-content-div">
+  <p>Adicionar documentos</p>
+  <p>Adicionar anexos para o atendimento</p>
+  <br />
+  <div class="update-file-div">
+    <div class="update-file-content">
+      <div>Ícone</div>
+      <br />
+      <div>Arrastar e soltar, ou clicar para adicionar documentos</div>
+    </div>
   </div>
+
+  <form method="post" enctype="multipart/form-data">
+    <div>
+      <label for="file">Choose file to upload</label>
+      <input
+        type="file"
+        id="file"
+        name="file"
+        multiple
+        (change)="onChangeFileSelected($event)"
+      />
+    </div>
+    <div>
+      <button (click)="upload()">Submit</button>
+    </div>
+  </form>
+
+  <ul>
+    <li *ngFor="let file of filesReducer">{{ file }}</li>
+  </ul>
 </div>
