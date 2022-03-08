@@ -2,7 +2,11 @@
   <p>Adicionar documentos</p>
   <p>Adicionar anexos para o atendimento</p>
   <br />
-  <div class="update-file-div">
+  <div
+    class="update-file-div"
+    (ondragover)="dragOverHandler($event)"
+    (ondrop)="drop($event)"
+  >
     <div class="update-file-content">
       <div>Ícone</div>
       <br />
@@ -21,12 +25,26 @@
         (change)="onChangeFileSelected($event)"
       />
     </div>
-    <div>
-      <button (click)="upload()">Submit</button>
+    <div style="float: right;">
+      <button class="submit-btn" (click)="upload()">Submit</button>
     </div>
   </form>
 
   <ul>
-    <li *ngFor="let file of filesReducer">{{ file }}</li>
+    <li *ngFor="let file of fileNameReducer; let i = index">
+      {{ file }}
+      <button style="color: red;" (click)="removeItemByIndex(i)">
+        Excluir
+      </button>
+    </li>
   </ul>
+
+  <div>
+    <img
+      *ngFor="let file of fileBase64Reducer"
+      [src]="file"
+      width="200"
+      height="200"
+    />
+  </div>
 </div>

@@ -6,38 +6,55 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  filesReducer: string[] = [];
-  input: any = document.querySelector('#file');
+  fileNameReducer: string[] = [];
+  fileBase64Reducer: string[] = [];
+
+  convertFileToBase64(file: any): Promise<string> {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        resolve(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  dragOverHandler(event: any) {
+    console.log(event);
+  }
+
+  drop(event: any) {
+    console.log(event);
+  }
 
   onChangeFileSelected(event: any): void {
-    console.log(this.input);
-
-    setTimeout(() => console.log(this.input), 3000);
-    console.log('onChangeFileSelected');
-    this.filesReducer = [];
-    if (this.input.multiple == true) {
-      for (let item of this.input.files) {
+    this.fileNameReducer = [];
+    if (event.target.multiple == true) {
+      for (let item of event.target.files) {
         const { name } = item;
-        this.filesReducer.push(name);
+        this.fileNameReducer.push(name);
       }
     } else {
-      let file = this.input.files.item(0);
-      this.filesReducer.push(file);
+      let file = event.target.files.item(0);
+      this.fileNameReducer.push(file);
+    }
+  }
+
+  async generateFileBase64() {
+    const input: any = document.querySelector('#file');
+    for (let item of input.files) {
+      const base64: string = await this.convertFileToBase64(item);
+      this.fileBase64Reducer.push(base64);
     }
   }
 
   upload(): void {
-    if (this.input.multiple == true) {
-      for (let item of this.input.files) {
-        const { name } = item;
-        this.filesReducer.push(name);
-      }
+    this.generateFileBase64();
+  }
 
-      // Only one file available
-    } else {
-      let file = this.input.files.item(0);
-    }
-
-    console.log(this.input);
+  removeItemByIndex(index: number) {
+    const TOTAL_ITEMS_REMOVED = 1;
+    this.fileNameReducer.splice(index, TOTAL_ITEMS_REMOVED);
   }
 }

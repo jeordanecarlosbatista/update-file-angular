@@ -30,3 +30,13 @@ p {
 
   color: rgba(0, 0, 0, 0.5);
 }
+
+.submit-btn {
+  width: 361px;
+  height: 67px;
+  left: 979px;
+  top: 894px;
+
+  background: #ffbb00;
+  border-radius: 50px;
+}
