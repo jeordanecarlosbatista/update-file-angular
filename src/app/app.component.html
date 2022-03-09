@@ -2,15 +2,18 @@
   <p>Adicionar documentos</p>
   <p>Adicionar anexos para o atendimento</p>
   <br />
-  <div
-    class="update-file-div"
-    (ondragover)="dragOverHandler($event)"
-    (ondrop)="drop($event)"
-  >
+  <div class="update-file-div" (click)="onClickUpdateFile()">
     <div class="update-file-content">
       <div>Ícone</div>
       <br />
       <div>Arrastar e soltar, ou clicar para adicionar documentos</div>
+      <input
+        type="file"
+        id="file"
+        name="file"
+        multiple
+        (change)="onChangeFileSelected($event)"
+      />
     </div>
   </div>
 
@@ -47,4 +50,21 @@
       height="200"
     />
   </div>
+</div>
+
+<div id="drop-area">
+  <form class="my-form">
+    <p>
+      Upload multiple files with the file dialog or by dragging and dropping
+      images onto the dashed region
+    </p>
+    <input
+      type="file"
+      id="fileElem"
+      multiple
+      accept="image/*"
+      onchange="handleFiles(this.files)"
+    />
+    <label class="button" for="fileElem">Select some files</label>
+  </form>
 </div>

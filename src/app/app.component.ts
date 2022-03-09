@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'my-app',
@@ -8,6 +8,33 @@ import { Component } from '@angular/core';
 export class AppComponent {
   fileNameReducer: string[] = [];
   fileBase64Reducer: string[] = [];
+
+  constructor() {}
+
+  preventDefaults(e) {
+    console.log(e);
+
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  ngAfterViewInit() {
+    document
+      .querySelector('.update-file-div')
+      .addEventListener('drag', (event) => {
+        console.log(event);
+      });
+
+    let dropArea = document.getElementById('drop-area');
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
+      dropArea.addEventListener(eventName, this.preventDefaults, false);
+    });
+  }
+
+  onClickUpdateFile() {
+    console.log('TESTE');
+  }
 
   convertFileToBase64(file: any): Promise<string> {
     return new Promise((resolve) => {
