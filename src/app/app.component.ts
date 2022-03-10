@@ -31,8 +31,10 @@ export class AppComponent {
   async onChangeFileSelected(event: any): Promise<void> {
     for (let item of event.target.files) {
       const { name } = item;
-      const base64: string = await this.convertFileToBase64(item);
-      this.fileUploadedReducer.push({ id: uuidv4(), name, file: base64 });
+      const id = uuidv4();
+      const file: string = await this.convertFileToBase64(item);
+
+      this.fileUploadedReducer.push({ id, name, file });
     }
   }
 
