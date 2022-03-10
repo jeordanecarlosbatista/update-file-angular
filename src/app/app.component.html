@@ -2,45 +2,38 @@
   <p>Adicionar documentos</p>
   <p>Adicionar anexos para o atendimento</p>
   <br />
-  <div class="update-file-div" (click)="onClickUpdateFile()">
+  <div class="update-file-div">
     <div class="update-file-content">
       <div>Ícone</div>
       <br />
       <div>Arrastar e soltar, ou clicar para adicionar documentos</div>
-      <input
-        type="file"
-        id="file"
-        name="file"
-        multiple
-        (change)="onChangeFileSelected($event)"
-      />
     </div>
-  </div>
-
-  <form method="post" enctype="multipart/form-data">
-    <div>
-      <label for="file">Choose file to upload</label>
-      <input
-        type="file"
-        id="file"
-        name="file"
-        multiple
-        (change)="onChangeFileSelected($event)"
-      />
-    </div>
-    <div style="float: right;">
+    <input
+      type="file"
+      id="file"
+      name="file"
+      multiple
+      (change)="onChangeFileSelected($event)"
+      style="
+          width: 100%;
+          padding-top: 100px;
+          padding-bottom: 100px;
+          opacity: 0.0;"
+    />
+    <div style="float: right; margin-top: 20px;">
       <button class="submit-btn" (click)="upload()">Submit</button>
     </div>
-  </form>
-
-  <ul>
-    <li *ngFor="let file of fileNameReducer; let i = index">
-      {{ file }}
-      <button style="color: red;" (click)="removeItemByIndex(i)">
-        Excluir
-      </button>
-    </li>
-  </ul>
+  </div>
+  <div>
+    <ul>
+      <li *ngFor="let file of fileNameReducer; let i = index">
+        {{ file }}
+        <button style="color: red;" (click)="removeItemByIndex(i)">
+          Excluir
+        </button>
+      </li>
+    </ul>
+  </div>
 
   <div>
     <img
@@ -50,21 +43,4 @@
       height="200"
     />
   </div>
-</div>
-
-<div id="drop-area">
-  <form class="my-form">
-    <p>
-      Upload multiple files with the file dialog or by dragging and dropping
-      images onto the dashed region
-    </p>
-    <input
-      type="file"
-      id="fileElem"
-      multiple
-      accept="image/*"
-      onchange="handleFiles(this.files)"
-    />
-    <label class="button" for="fileElem">Select some files</label>
-  </form>
 </div>

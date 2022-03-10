@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'my-app',
@@ -11,31 +11,6 @@ export class AppComponent {
 
   constructor() {}
 
-  preventDefaults(e) {
-    console.log(e);
-
-    e.preventDefault();
-    e.stopPropagation();
-  }
-
-  ngAfterViewInit() {
-    document
-      .querySelector('.update-file-div')
-      .addEventListener('drag', (event) => {
-        console.log(event);
-      });
-
-    let dropArea = document.getElementById('drop-area');
-
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
-      dropArea.addEventListener(eventName, this.preventDefaults, false);
-    });
-  }
-
-  onClickUpdateFile() {
-    console.log('TESTE');
-  }
-
   convertFileToBase64(file: any): Promise<string> {
     return new Promise((resolve) => {
       const reader = new FileReader();
@@ -45,14 +20,6 @@ export class AppComponent {
       };
       reader.readAsDataURL(file);
     });
-  }
-
-  dragOverHandler(event: any) {
-    console.log(event);
-  }
-
-  drop(event: any) {
-    console.log(event);
   }
 
   onChangeFileSelected(event: any): void {
@@ -81,7 +48,11 @@ export class AppComponent {
   }
 
   removeItemByIndex(index: number) {
+    console.log(index);
     const TOTAL_ITEMS_REMOVED = 1;
-    this.fileNameReducer.splice(index, TOTAL_ITEMS_REMOVED);
+    this.fileNameReducer = this.fileNameReducer.splice(
+      index,
+      TOTAL_ITEMS_REMOVED
+    );
   }
 }
