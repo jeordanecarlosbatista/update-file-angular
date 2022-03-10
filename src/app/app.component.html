@@ -1,4 +1,48 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<div class="page-content-div">
+  <p>Adicionar documentos</p>
+  <p>Adicionar anexos para o atendimento</p>
+  <br />
+  <div class="update-file-div">
+    <div class="update-file-content">
+      <div>Ícone</div>
+      <br />
+      <div>Arrastar e soltar, ou clicar para adicionar documentos</div>
+    </div>
+    <input
+      type="file"
+      id="file"
+      name="file"
+      multiple
+      (change)="onChangeFileSelected($event)"
+      style="
+          width: 100%;
+          padding-top: 100px;
+          padding-bottom: 100px;
+          opacity: 0.0;"
+    />
+    <div style="float: right; margin-top: 20px;">
+      <button class="submit-btn" (click)="upload()">Submit</button>
+    </div>
+  </div>
+  <br />
+  <br />
+  <div>
+    <ul>
+      <li *ngFor="let item of fileUploadedReducer">
+        {{ item.name }}
+        <button style="color: red;" (click)="removeItemById(item.id)">
+          Excluir
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <img
+      *ngFor="let item of fileUploadedReducer"
+      [src]="item.file"
+      width="200"
+      height="200"
+    />
+  </div>
+</div>
