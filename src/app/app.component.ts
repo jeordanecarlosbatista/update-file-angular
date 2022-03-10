@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
+
+type FileUploadReducer = {
+  id: string;
+  name: string;
+  file: string;
+};
 
 @Component({
   selector: 'my-app',
@@ -6,8 +13,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  fileNameReducer: string[] = [];
-  fileBase64Reducer: string[] = [];
+  fileUploadedReducer: FileUploadReducer[] = [];
 
   constructor() {}
 
@@ -22,37 +28,30 @@ export class AppComponent {
     });
   }
 
-  onChangeFileSelected(event: any): void {
-    this.fileNameReducer = [];
-    if (event.target.multiple == true) {
-      for (let item of event.target.files) {
-        const { name } = item;
-        this.fileNameReducer.push(name);
-      }
-    } else {
-      let file = event.target.files.item(0);
-      this.fileNameReducer.push(file);
-    }
-  }
-
-  async generateFileBase64() {
-    const input: any = document.querySelector('#file');
-    for (let item of input.files) {
+  async onChangeFileSelected(event: any): Promise<void> {
+    for (let item of event.target.files) {
+      const { name } = item;
       const base64: string = await this.convertFileToBase64(item);
-      this.fileBase64Reducer.push(base64);
+      this.fileUploadedReducer.push({ id: uuidv4(), name, file: base64 });
     }
   }
 
   upload(): void {
-    this.generateFileBase64();
+    console.log(
+      'Upload files on ' + this.fileUploadedReducer.map((val) => val.id)
+    );
   }
 
-  removeItemByIndex(index: number) {
-    console.log(index);
+  removeItemById(id: string) {
     const TOTAL_ITEMS_REMOVED = 1;
-    this.fileNameReducer = this.fileNameReducer.splice(
-      index,
-      TOTAL_ITEMS_REMOVED
-    );
+    const index = this.fileUploadedReducer
+      .map((val) => {
+        return val.id;
+      })
+      .indexOf(id);
+    if (index !== -1) {
+      this.fileUploadedReducer.splice(index, TOTAL_ITEMS_REMOVED);
+      console.log('Item ' + id + ' excluído!');
+    }
   }
 }

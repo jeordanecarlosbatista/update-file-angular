@@ -24,11 +24,13 @@
       <button class="submit-btn" (click)="upload()">Submit</button>
     </div>
   </div>
+  <br />
+  <br />
   <div>
     <ul>
-      <li *ngFor="let file of fileNameReducer; let i = index">
-        {{ file }}
-        <button style="color: red;" (click)="removeItemByIndex(i)">
+      <li *ngFor="let item of fileUploadedReducer">
+        {{ item.name }}
+        <button style="color: red;" (click)="removeItemById(item.id)">
           Excluir
         </button>
       </li>
@@ -37,8 +39,8 @@
 
   <div>
     <img
-      *ngFor="let file of fileBase64Reducer"
-      [src]="file"
+      *ngFor="let item of fileUploadedReducer"
+      [src]="item.file"
       width="200"
       height="200"
     />
